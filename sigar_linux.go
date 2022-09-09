@@ -253,13 +253,17 @@ func (self *CpuList) Get() error {
 }
 
 func (self *FileSystemList) Get() error {
+	src := "/etc/mtab"
+	if _, err := os.Stat(src); err != nil {
+		source = "/proc/mounts"
+	}
 	capacity := len(self.List)
 	if capacity == 0 {
 		capacity = 10
 	}
 	fslist := make([]FileSystem, 0, capacity)
 
-	err := readFile("/etc/mtab", func(line string) bool {
+	err := readFile(src, func(line string) bool {
 		fields := strings.Fields(line)
 
 		fs := FileSystem{}
