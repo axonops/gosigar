@@ -255,7 +255,7 @@ func (self *CpuList) Get() error {
 func (self *FileSystemList) Get() error {
 	src := "/etc/mtab"
 	if _, err := os.Stat(src); err != nil {
-		source = "/proc/mounts"
+		src = "/proc/mounts"
 	}
 	capacity := len(self.List)
 	if capacity == 0 {
