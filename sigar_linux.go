@@ -24,6 +24,7 @@ var system struct {
 }
 
 var Procd string
+var Etcd string
 var Sysd1 string
 var Sysd2 string
 
@@ -52,6 +53,7 @@ func init() {
 	system.ticks = 100 // C.sysconf(C._SC_CLK_TCK)
 
 	Procd = "/proc"
+	Etcd = "/etc"
 	Sysd1 = ""
 	Sysd2 = ""
 
@@ -253,9 +255,9 @@ func (self *CpuList) Get() error {
 }
 
 func (self *FileSystemList) Get() error {
-	src := "/etc/mtab"
+	src := Etcd + "/mtab"
 	if _, err := os.Stat(src); err != nil {
-		src = "/proc/mounts"
+		src = Procd + "/mounts"
 	}
 	capacity := len(self.List)
 	if capacity == 0 {
